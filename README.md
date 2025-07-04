@@ -1,23 +1,25 @@
 # Gomoku Game
 
-A real-time multiplayer Gomoku (Five in a Row) game built with .NET Core and React.
+A pure 3-player Gomoku (Five in a Row) game built with .NET Core and React with AI opponents and multiplayer support.
 
 ## Features
 
 ### Core Gameplay
+- **3-player Gomoku**: Unique three-player variation of the classic game
 - Real-time multiplayer gameplay using SignalR
 - User authentication with JWT tokens
-- Three game modes: Human vs Human, Human vs AI, AI vs AI
-- Configurable board sizes (6×6 to 24×24)
-- Two win conditions: 5-in-a-row OR 4-in-a-row with open ends
+- Multiple game modes: Local multiplayer, AI opponents, Network games
+- Configurable board sizes (6×6 to 24×24) 
+- Classic win condition: 5-in-a-row
 - Automatic draw detection when no winning moves possible
-- Winning row highlighting
+- Winning row highlighting with visual feedback
 
 ### AI System
-- Three difficulty levels: Easy, Medium, Hard
-- Strategic evaluation with pattern recognition
-- Separate AI difficulty settings for AI vs AI mode
-- AI reasoning display during gameplay
+- **Advanced AI opponents** with multiple difficulty levels
+- Minimax algorithm with alpha-beta pruning
+- Strategic evaluation with threat detection and pattern recognition
+- Dynamic move ordering and position evaluation
+- Configurable AI difficulty settings
 
 ### Visual Customization
 - Light/dark theme switcher
@@ -31,21 +33,22 @@ A real-time multiplayer Gomoku (Five in a Row) game built with .NET Core and Rea
 - Dynamic icon scaling with cell size
 
 ### Game Features
-- Comprehensive scoring system with time bonuses, move efficiency, strategy analysis
-- Achievement system with unlockable rewards
-- Rank progression (Beginner to Legend)
-- Fun randomized game starts with messages
-- Game statistics and history tracking
-- Responsive design for all devices
+- **Random game start**: Fair play with randomized first player selection
+- Game history and statistics tracking
+- High scores and leaderboards
+- Network game lobby system
+- Clean, responsive design for all devices
+- Real-time game state synchronization
 
 ## Tech Stack
 
 ### Backend
 - .NET Core 8.0
-- Entity Framework Core
-- SignalR for real-time communication
-- JWT authentication
-- SQLite database
+- Entity Framework Core with PostgreSQL
+- SignalR for real-time communication  
+- JWT authentication with refresh tokens
+- Clean architecture with repository pattern
+- AutoMapper for object mapping
 
 ### Frontend
 - React with TypeScript
@@ -61,7 +64,7 @@ A real-time multiplayer Gomoku (Five in a Row) game built with .NET Core and Rea
 ### Prerequisites
 - .NET Core 8.0 SDK
 - Node.js 18+ and npm
-- SQLite
+- PostgreSQL 14+
 
 ### Backend Setup
 1. Navigate to the backend directory:
@@ -74,12 +77,14 @@ A real-time multiplayer Gomoku (Five in a Row) game built with .NET Core and Rea
    dotnet restore
    ```
 
-3. Apply database migrations:
+3. Set up PostgreSQL database and update connection string in `appsettings.json`
+
+4. Apply database migrations:
    ```
-   dotnet run --project src/Game.API --migrate
+   dotnet ef database update --project src/Game.Infrastructure --startup-project src/Game.API
    ```
 
-4. Run the backend:
+5. Run the backend:
    ```
    dotnet run --project src/Game.API
    ```
@@ -118,25 +123,22 @@ The application now includes a complete authentication system:
 
 ## Game Flow
 
-1. Users register or login to access the game
-2. Choose game mode: Human vs Human, Human vs AI, or AI vs AI
-3. Configure settings: board size (6×6 to 24×24), AI difficulty, player icons
-4. Start game with random player selection or begin immediately
-5. Players take turns placing pieces (humans or AIs based on mode)
-6. Game ends with traditional win, open-4 win, or draw
-7. View scoring breakdown, achievements, and statistics
-8. Start new games or adjust settings
+1. **Authentication**: Users register or login to access the game
+2. **Game Creation**: Create local games with AI opponents or join network games
+3. **Configuration**: Choose board size (6×6 to 24×24) and AI difficulty settings
+4. **Gameplay**: Take turns placing pieces with random starting player selection
+5. **Victory**: Game ends when a player achieves 5-in-a-row or board is full (draw)
+6. **Statistics**: View game history, scores, and player statistics
 
 ## Game Modes
 
-### Human vs Human
-Traditional two-player mode with manual piece placement.
+### Local Games
+- **Human vs AI**: Play against intelligent computer opponents
+- **Local Multiplayer**: Multiple players on the same device
 
-### Human vs AI  
-Single player against computer opponent with configurable difficulty.
-
-### AI vs AI
-Watch two AI opponents battle with separate difficulty settings. No manual input required.
+### Network Games  
+- **Real-time multiplayer**: Join or host games with other players online
+- **Game lobby system**: Browse and join available games
 
 ## API Endpoints
 
@@ -145,10 +147,16 @@ Watch two AI opponents battle with separate difficulty settings. No manual input
 - `POST /auth/login` - Login and receive JWT token
 
 ### Game
-- `POST /game` - Create a new game (with board size, game mode, AI settings)
+- `POST /game` - Create a new game (local/AI games)
 - `GET /game/{id}` - Get game details
 - `POST /game/{id}/move` - Make a move
+- `POST /game/{id}/ai/move` - Trigger AI move
 - `GET /game` - Get user's game history
+
+### Network Games
+- `GET /network` - Get available network games
+- `POST /network` - Create a network game
+- `POST /network/{id}/join` - Join a network game
 
 ## Contributing
 
