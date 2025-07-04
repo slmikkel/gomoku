@@ -1,0 +1,14 @@
+{
+    "name": "game/extended-tic-tac-toe",
+    "description": "A network-based version of Tic-tac-toe with extended win conditions",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "cboden/ratchet": "^0.4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Game\\": "src/"
+        }
+    }
+} 

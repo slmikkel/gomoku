@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/../../cc5" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../chatgptclient" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../house-of-control/docs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../laravel-crawler" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../userprofile" vcs="Git" />
+  </component>
+</project>

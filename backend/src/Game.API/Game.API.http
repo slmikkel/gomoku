@@ -1,0 +1,5 @@
+@Game.API_HostAddress = http://localhost:5114
+
+Accept: application/json
+
+###
